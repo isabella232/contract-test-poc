@@ -1,0 +1,63 @@
+{
+  "consumer": {
+    "name": "UI"
+  },
+  "provider": {
+    "name": "Gate"
+  },
+  "interactions": [
+    {
+      "description": "a request for user ALICE, aged 101",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "name": "ALICE",
+          "age": 101
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "name": "ALICE",
+          "age": "old"
+        }
+      }
+    },
+    {
+      "description": "a request for user Bob, aged 32",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "name": "Bob",
+          "age": 32
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "name": "BOB",
+          "age": "young"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

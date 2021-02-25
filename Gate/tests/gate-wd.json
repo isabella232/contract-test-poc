@@ -1,0 +1,85 @@
+{
+  "consumer": {
+    "name": "Gate"
+  },
+  "provider": {
+    "name": "WD"
+  },
+  "interactions": [
+    {
+      "description": "a request for User Doe",
+      "providerState": "User Doe is 123 years old",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Doe",
+          "age": 123
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "age": "old",
+          "name": "Doe"
+        }
+      }
+    },
+    {
+      "description": "a request for User Smith",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "Smith",
+          "age": 10
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "age": "young",
+          "name": "Smith"
+        }
+      }
+    },
+    {
+      "description": "a request for User ALICE",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "name": "ALICE",
+          "age": 20
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": {
+          "age": "young",
+          "name": "ALICE"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "0.0.0"
+    }
+  }
+}

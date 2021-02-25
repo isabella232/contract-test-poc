@@ -1,0 +1,24 @@
+{
+  "name": "ui",
+  "version": "0.0.1",
+  "description": "Front",
+  "main": "src/consumer.js",
+  "scripts": {
+    "test": "npm run test:consumer && npm run test:publish",
+    "test:consumer": "mocha test/consumer.spec.js",
+    "test:publish": "node test/publish.js"
+  },
+  "author": "Guillaume Lethuillier",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "chai": "^4.3.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^8.3.0",
+    "request": "^2.88.2",
+    "superagent": "^6.1.0"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^9.15.1"
+  }
+}
