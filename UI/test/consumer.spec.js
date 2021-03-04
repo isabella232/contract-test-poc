@@ -37,7 +37,6 @@ describe("Pact", () => {
     const name = "ALICE"
     const age = 101
     const data = { name: name, age: age }
-    console.log(data)
     
     before(() =>
       provider.addInteraction({
@@ -71,7 +70,6 @@ describe("Pact", () => {
     const name = "Bob"
     const age = 32
     const data = { name: name, age: age }
-    console.log(data)
 
     before(() =>
       provider.addInteraction({
@@ -104,7 +102,6 @@ describe("Pact", () => {
     const name = 'Derek'
     const age = -1
     const data = { name: name, age: age }
-    console.log(data)
 
     before(() =>
       provider.addInteraction({
@@ -118,18 +115,22 @@ describe("Pact", () => {
           },
         },
         willRespondWith: {
-          status: 200,
+          status: 400,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
           },
-          body: {code: 400, description: `LOL, dude, \`${age}\` is not a valid age"`, name: "Bad Request"}, // expecting a specific error message
+          body: {code: 400, description: `LOL, dude, \'${age}\' is not a valid age`, name: "Bad Request"}, // expecting a specific error message
         },
       })
     )
 
     it("a response is given", done => {
       // TODO make it work with judgeAge() function
-      expect(checkAge(data)).to.eventually.be.fulfilled.notify(done)
+      expect(checkAge(data)).to.eventually.have
+      .property('body', "{code: 400, description: `LOL, dude, \'${age}\' is not a valid age`, name: \"Bad Request\"}")
+      .and.to.be.eventually
+      .rejectedWith("Bad Request")
+      .notify(done)
     })
   })
 

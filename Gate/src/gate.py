@@ -29,7 +29,7 @@ def handle_exception(e):
         "name": e.name,
         "description": e.description,
     })
-    response.content_type = "application/json"
+    response.content_type = "application/json; charset=utf-8"
     return response
 
 
@@ -40,7 +40,7 @@ def judge_name():
     if request.method == 'POST':
         content = request.get_json(force=True)
         if int(content['age']) < 0:
-            return handle_exception(BadRequest(description=f"LOL, dude, `{content['age']}` is not a valid age"))
+            return handle_exception(BadRequest(description=f"LOL, dude, \'{content['age']}\' is not a valid age"))
         else:
             name = capitalize_name(content['name'])
             age = content['age']
