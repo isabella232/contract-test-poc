@@ -16,14 +16,15 @@ PACT_BROKER_PASSWORD = "PoC_P4CT!"
 
 PACT_MOCK_HOST = 'localhost'
 PACT_MOCK_PORT = 8080
-PACT_DIR = './' # temporary fix: issue on macOS
-                #os.path.dirname(os.path.realpath(__file__))
+PACT_DIR = './'  # temporary fix: issue on macOS
+# os.path.dirname(os.path.realpath(__file__))
 
 URL = f"http://{PACT_MOCK_HOST}:{PACT_MOCK_PORT}/user"
 
 test_tag = "expectations_from_gate_0.0.2c"
-gate_version = "0.0.2c" # as consumer
+gate_version = "0.0.2c"  # as consumer
 pact_specification = "2.0.0"
+
 
 @pytest.fixture(scope='session')
 def pact(request):
@@ -41,8 +42,8 @@ def pact(request):
 
 def test_old_user(pact):
     expected = {
-      'age': 'old',
-      'name': 'Doe',
+        'age': 'old',
+        'name': 'Doe',
     }
 
     (pact
@@ -50,52 +51,53 @@ def test_old_user(pact):
      .upon_receiving('a request for User Doe')
      .with_request(
         method='POST',
-        path= '/user',
+        path='/user',
         body={'name': 'Doe', 'age': 123},
         headers={'Content-Type': 'application/json'})
      .will_respond_with(200, body=expected))
 
     with pact:
         result = request_wd('Doe', 123)
-        assert('old' in result)
+        assert ('old' in result)
 
 
 def test_young_user(pact):
     expected = {
-      'age': 'young',
-      'name': 'Smith',
+        'age': 'young',
+        'name': 'Smith',
     }
 
     (pact
-     #.given('User Smith is 10 years old')
+     # .given('User Smith is 10 years old')
      .upon_receiving('a request for User Smith')
      .with_request(
         method='POST',
-        path= '/user',
+        path='/user',
         body={'name': 'Smith', 'age': 10},
         headers={'Content-Type': 'application/json'})
      .will_respond_with(200, body=expected))
 
     with pact:
         result = request_wd('Smith', 10)
-        assert('young' in result)
+        assert ('young' in result)
+
 
 def test_young_user_uppercase(pact):
     expected = {
-      'age': 'young',
-      'name': 'ALICE',
+        'age': 'young',
+        'name': 'ALICE',
     }
 
     (pact
-     #.given('User ALICE is 20 years old')
+     # .given('User ALICE is 20 years old')
      .upon_receiving('a request for User ALICE')
      .with_request(
         method='POST',
-        path= '/user',
+        path='/user',
         body={'name': 'ALICE', 'age': 20},
         headers={'Content-Type': 'application/json'})
      .will_respond_with(200, body=expected))
 
     with pact:
         result = request_wd('ALICE', 20)
-        assert('young' in result)
+        assert ('young' in result)

@@ -1,8 +1,8 @@
 // original file: https://github.com/pact-foundation/pact-js/blob/master/examples/e2e/test/publish.js
 
-const { Publisher } = require("@pact-foundation/pact")
-const path = require("path")
-const childProcess = require("child_process")
+import { Publisher } from "@pact-foundation/pact"
+import path from "path"
+import childProcess from "child_process"
   
 const exec = command =>
     childProcess

@@ -1,10 +1,12 @@
 // original file: https://github.com/pact-foundation/pact-js/blob/master/examples/e2e/test/consumer.spec.js
-const path = require("path")
-const chai = require("chai")
-const chaiAsPromised = require("chai-as-promised")
+import path from "path"
+import chai from "chai"
+import chaiAsPromised from "chai-as-promised"
 const expect = chai.expect
-const { Pact, Matchers } = require("@pact-foundation/pact")
-const LOG_LEVEL = process.env.LOG_LEVEL || "WARN"
+import { Pact, Matchers } from "@pact-foundation/pact"
+import { judgeAge, checkAge } from "../src/age-app/src/helpers.js"
+
+const LOG_LEVEL = process.env.LOG_LEVEL || "DEBUG"
 
 chai.use(chaiAsPromised)
 
@@ -21,43 +23,28 @@ describe("Pact", () => {
 
   const { like } = Matchers
 
-
-  // Setup a Mock Server before unit tests run.
-  // This server acts as a Test Double for the real Provider API.
-  // We then call addInteraction() for each test to configure the Mock Service
-  // to act like the Provider
-  // It also sets up expectations for what requests are to come, and will fail
-  // if the calls are not seen.
   before(() =>
     provider.setup().then(opts => {
-      process.env.API_HOST = `http://localhost:5000`
+      process.env.API_HOST = `http://localhost:${opts.port}`
     })
   )
 
-  // After each individual test (one or more interactions)
-  // we validate that the correct request came through.
-  // This ensures what we _expect_ from the provider, is actually
-  // what we've asked for (and is what gets captured in the contract)
   afterEach(() => provider.verify())
 
-  // Configure and import consumer API
-  // Note that we update the API endpoint to point at the Mock Service
-  const {
-    checkAge
-  } = require("../src/consumer")
-
-
   describe("when a call to the Gate is made to assess ALICE's age", () => {
-    const name = 'ALICE'
-    const age = 101
 
+    const name = "ALICE"
+    const age = 101
+    const data = { name: name, age: age }
+    console.log(data)
+    
     before(() =>
       provider.addInteraction({
         uponReceiving: "a request for user ALICE, aged 101",
         withRequest: {
           method: "POST",
           path: "/user",
-          body: { name: name, age: age},
+          body: data,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
           },
@@ -73,13 +60,17 @@ describe("Pact", () => {
     )
 
     it("a response is given", done => {
-      expect(checkAge(name, age)).to.eventually.be.fulfilled.notify(done)
+      // TODO make it work with judgeAge() function
+      expect(checkAge(data)).to.eventually.be.fulfilled.notify(done)
     })
   })
 
   describe("when a call to the Gate is made to assess Bob's age", () => {
-    const name = 'Bob'
+
+    const name = "Bob"
     const age = 32
+    const data = { name: name, age: age }
+    console.log(data)
 
     before(() =>
       provider.addInteraction({
@@ -87,7 +78,7 @@ describe("Pact", () => {
         withRequest: {
           method: "POST",
           path: "/user",
-          body: { name: name, age: age},
+          body: data,
           headers: {
             "Content-Type": "application/json; charset=utf-8",
           },
@@ -103,7 +94,41 @@ describe("Pact", () => {
     )
 
     it("a response is given", done => {
-      expect(checkAge(name, age)).to.eventually.be.fulfilled.notify(done)
+      // TODO make it work with judgeAge() function
+      expect(checkAge(data)).to.eventually.be.fulfilled.notify(done)
+    })
+  })
+
+  describe("when a call to the Gate is made to assess negative age", () => {
+    const name = 'Derek'
+    const age = -1
+    const data = { name: name, age: age }
+    console.log(data)
+
+    before(() =>
+      provider.addInteraction({
+        uponReceiving: "a request for user Derek, aged -1",
+        withRequest: {
+          method: "POST",
+          path: "/user",
+          body: data,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        },
+        willRespondWith: {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: {code: 400, description: `LOL, dude, \`${age}\` is not a valid age"`, name: "Bad Request"}, // expecting a specific error message
+        },
+      })
+    )
+
+    it("a response is given", done => {
+      // TODO make it work with judgeAge() function
+      expect(checkAge(data)).to.eventually.be.fulfilled.notify(done)
     })
   })
 

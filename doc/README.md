@@ -51,6 +51,13 @@ $ curl -s -H "Content-type: application/json" -X POST -d '{"name": "Bob", "age":
   "name": "BOB"
 }
 ```
+# Install pact stand alone locally
+
+## For MAC OS
+```
+$ brew tap pact-foundation/pact-ruby-standalone
+$ brew install pact-ruby-standalone
+```
 
 # Generate the original pacts and verify both providers
 
@@ -78,6 +85,7 @@ _(Ensure that the Gate and WD servers are down)._
 
 ```
 $ cd UI
+$ npm install (only for the first time)
 $ npm test
 ```
 

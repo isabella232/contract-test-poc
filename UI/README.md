@@ -22,7 +22,14 @@ $ cd WD
 $ sbt run
 ```
 
-## 3. Perform the request
+## 3. Run front end
+
+```
+cd UI/src/age-app
+npm start
+```
+
+## 4. Perform the request
 
 ```
 $ node node src/consumer.js 

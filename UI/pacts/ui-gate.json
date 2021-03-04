@@ -31,6 +31,31 @@
       }
     },
     {
+      "description": "a request for user Derek, aged -1",
+      "request": {
+        "method": "POST",
+        "path": "/user",
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "name": "Derek",
+          "age": -1
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "code": 400,
+          "description": "LOL, dude, `-1` is not a valid age\"",
+          "name": "Bad Request"
+        }
+      }
+    },
+    {
       "description": "a request for user Bob, aged 32",
       "request": {
         "method": "POST",
