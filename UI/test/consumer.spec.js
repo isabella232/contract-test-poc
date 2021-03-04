@@ -3,7 +3,8 @@ import path from "path"
 import chai from "chai"
 import chaiAsPromised from "chai-as-promised"
 const expect = chai.expect
-import { Pact, Matchers } from "@pact-foundation/pact"
+import pact from "@pact-foundation/pact"
+const { Pact, Matchers } = pact
 import { judgeAge, checkAge } from "../src/age-app/src/helpers.js"
 
 const LOG_LEVEL = process.env.LOG_LEVEL || "DEBUG"

@@ -1,6 +1,8 @@
 // original file: https://github.com/pact-foundation/pact-js/blob/master/examples/e2e/test/publish.js
 
-import { Publisher } from "@pact-foundation/pact"
+import pact from "@pact-foundation/pact"
+const { Publisher } = pact
+
 import path from "path"
 import childProcess from "child_process"
   
