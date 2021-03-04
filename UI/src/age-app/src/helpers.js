@@ -14,7 +14,6 @@ export async function judgeAge(data) {
     return res
   };
 
-// couldn't make test work with async judgeAge(data) function. Using another function that performs the same call in the test.
 export function checkAge(data) {
     return request
       .post(`${BASE_URL}/user`)
