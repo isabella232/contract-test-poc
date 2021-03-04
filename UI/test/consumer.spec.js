@@ -31,7 +31,7 @@ describe("Pact", () => {
 
   afterEach(() => provider.verify())
 
-  describe("when a call to the Gate is made to assess ALICE's age", () => {
+  describe("when a call to the Gate is made to assess over 100 age", () => {
 
     const name = "ALICE"
     const age = 101
@@ -65,7 +65,7 @@ describe("Pact", () => {
     })
   })
 
-  describe("when a call to the Gate is made to assess Bob's age", () => {
+  describe("when a call to the Gate is made to assess less than 100 age", () => {
 
     const name = "Bob"
     const age = 32

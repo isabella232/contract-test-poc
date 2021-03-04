@@ -45,7 +45,6 @@ class MyForm extends React.Component {
     const form = event.target;
     const data = new FormData(form);
 
-
     for (let name of data.keys()) {
       const input = form.elements[name];
       const parserName = input.dataset.parse;
